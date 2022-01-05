@@ -25,7 +25,6 @@ Partial Class Form1
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Me.Addnode = New System.Windows.Forms.Button()
         Me.Deletenode = New System.Windows.Forms.Button()
         Me.Nodes = New System.Windows.Forms.DataGridView()
         Me.n = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -38,23 +37,15 @@ Partial Class Form1
         Me.Answer = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.LoadExcel = New System.Windows.Forms.Button()
+        Me.SaveExcel = New System.Windows.Forms.Button()
         CType(Me.Nodes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'Addnode
-        '
-        Me.Addnode.Font = New System.Drawing.Font("Franklin Gothic Medium Cond", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Addnode.Location = New System.Drawing.Point(22, 444)
-        Me.Addnode.Name = "Addnode"
-        Me.Addnode.Size = New System.Drawing.Size(150, 76)
-        Me.Addnode.TabIndex = 0
-        Me.Addnode.Text = "Add Node"
-        Me.Addnode.UseVisualStyleBackColor = True
         '
         'Deletenode
         '
         Me.Deletenode.Font = New System.Drawing.Font("Franklin Gothic Medium Cond", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Deletenode.Location = New System.Drawing.Point(224, 444)
+        Me.Deletenode.Location = New System.Drawing.Point(426, 444)
         Me.Deletenode.Name = "Deletenode"
         Me.Deletenode.Size = New System.Drawing.Size(150, 76)
         Me.Deletenode.TabIndex = 2
@@ -127,7 +118,7 @@ Partial Class Form1
         'Calculate
         '
         Me.Calculate.Font = New System.Drawing.Font("Franklin Gothic Medium Cond", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Calculate.Location = New System.Drawing.Point(426, 444)
+        Me.Calculate.Location = New System.Drawing.Point(635, 444)
         Me.Calculate.Name = "Calculate"
         Me.Calculate.Size = New System.Drawing.Size(150, 76)
         Me.Calculate.TabIndex = 5
@@ -140,7 +131,7 @@ Partial Class Form1
         Me.Forces.ItemHeight = 20
         Me.Forces.Location = New System.Drawing.Point(605, 96)
         Me.Forces.Name = "Forces"
-        Me.Forces.Size = New System.Drawing.Size(102, 424)
+        Me.Forces.Size = New System.Drawing.Size(102, 304)
         Me.Forces.TabIndex = 6
         '
         'Answer
@@ -149,7 +140,7 @@ Partial Class Form1
         Me.Answer.ItemHeight = 20
         Me.Answer.Location = New System.Drawing.Point(713, 96)
         Me.Answer.Name = "Answer"
-        Me.Answer.Size = New System.Drawing.Size(102, 424)
+        Me.Answer.Size = New System.Drawing.Size(102, 304)
         Me.Answer.TabIndex = 7
         '
         'Label1
@@ -170,12 +161,36 @@ Partial Class Form1
         Me.Label2.TabIndex = 9
         Me.Label2.Text = "Force Values"
         '
+        'LoadExcel
+        '
+        Me.LoadExcel.Font = New System.Drawing.Font("Franklin Gothic Medium Cond", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.LoadExcel.Location = New System.Drawing.Point(224, 444)
+        Me.LoadExcel.Name = "LoadExcel"
+        Me.LoadExcel.Size = New System.Drawing.Size(150, 76)
+        Me.LoadExcel.TabIndex = 10
+        Me.LoadExcel.Text = "Load from Excel"
+        Me.LoadExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.LoadExcel.UseVisualStyleBackColor = True
+        '
+        'SaveExcel
+        '
+        Me.SaveExcel.Font = New System.Drawing.Font("Franklin Gothic Medium Cond", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.SaveExcel.Location = New System.Drawing.Point(22, 444)
+        Me.SaveExcel.Name = "SaveExcel"
+        Me.SaveExcel.Size = New System.Drawing.Size(150, 76)
+        Me.SaveExcel.TabIndex = 11
+        Me.SaveExcel.Text = "Save to Excel"
+        Me.SaveExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.SaveExcel.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1428, 549)
+        Me.Controls.Add(Me.SaveExcel)
+        Me.Controls.Add(Me.LoadExcel)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Answer)
@@ -183,7 +198,6 @@ Partial Class Form1
         Me.Controls.Add(Me.Calculate)
         Me.Controls.Add(Me.Nodes)
         Me.Controls.Add(Me.Deletenode)
-        Me.Controls.Add(Me.Addnode)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -196,8 +210,6 @@ Partial Class Form1
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Addnode As Button
     Friend WithEvents Deletenode As Button
     Private WithEvents Nodes As DataGridView
     Friend WithEvents Calculate As Button
@@ -210,4 +222,6 @@ Partial Class Form1
     Friend WithEvents Answer As ListBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents LoadExcel As Button
+    Friend WithEvents SaveExcel As Button
 End Class
