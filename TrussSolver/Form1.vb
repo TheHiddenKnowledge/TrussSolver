@@ -395,7 +395,7 @@ Public Class Form1
             MessageBox.Show("Unexpected error occurred: " & vbCrLf & ex.Message)
         End Try
     End Sub
-
+    'Subroutine that saves the inputted data to an excel file
     Private Sub SaveExcel_Click(sender As Object, e As EventArgs) Handles SaveExcel.Click
         Const WM_QUIT = &H12
         SaveFile.Filter = "Excel files (*.xlsx)|*.xlsx"
@@ -423,7 +423,7 @@ Public Class Form1
             MessageBox.Show("File successfully saved!")
         End If
     End Sub
-
+    'Subroutine that loads input data from an excel file
     Private Sub LoadExcel_Click(sender As Object, e As EventArgs) Handles LoadExcel.Click
         Const WM_QUIT = &H12
         OpenFile.Filter = "Excel files (*.xlsx)|*.xlsx"
