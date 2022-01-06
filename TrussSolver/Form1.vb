@@ -145,11 +145,11 @@ Public Class Form1
         'This scaling factor was calculated experimentally
         Dim scale As Double = Width / (10 * (maxcoor + 1))
         'This is the horizontal start offset relative to the width of the form
-        Dim widthfactor As Double = 3 / 4
+        Dim widthfactor As Double = Width - (Width - (Answer.Left + Answer.Width)) / 2
         'The surface handle used to create the graphics objects
         Dim surface As Graphics = CreateGraphics()
         'When this function is called the surface is first cleared
-        surface.Clear(Color.WhiteSmoke)
+        surface.Clear(Color.DarkSalmon)
         'Array to keep track of the members that have already been plotted
         Dim plotted As New ArrayList()
         'Unique string that identifies each member
@@ -210,9 +210,9 @@ Public Class Form1
                         For k As Integer = 0 To p1.Length - 1
                             p1(k) = Points(k, node1 - 1)
                             p2(k) = Points(k, node2 - 1)
-                            currentnode.X = scale * p1(0) + Width * widthfactor
+                            currentnode.X = scale * p1(0) + widthfactor
                             currentnode.Y = -scale * p1(1) + Height / 2
-                            nextnode.X = scale * p2(0) + Width * widthfactor
+                            nextnode.X = scale * p2(0) + widthfactor
                             nextnode.Y = -scale * p2(1) + Height / 2
                         Next
                         'Two circles are drawn for each joint of the member
@@ -387,17 +387,6 @@ Public Class Form1
         End If
     End Sub
 
-    'Subroutine for deleting selected rows from the datagridview
-    Private Sub Deletenode_Click(sender As Object, e As EventArgs) Handles Deletenode.Click
-        If Nodes.SelectedRows.Count > 0 Then
-            If Not Nodes.SelectedRows.Contains(Nodes.Rows.Item(Nodes.RowCount - 1)) Then
-                For Each i As DataGridViewRow In Nodes.SelectedRows
-                    Nodes.Rows.Remove(i)
-                Next
-            End If
-        End If
-    End Sub
-
     'Subroutine for solving the truss 
     Private Sub Calculate_Click(sender As Object, e As EventArgs) Handles Calculate.Click
         Try
@@ -408,35 +397,53 @@ Public Class Form1
     End Sub
 
     Private Sub SaveExcel_Click(sender As Object, e As EventArgs) Handles SaveExcel.Click
-        Dim objApp As Excel.Application = New Excel.Application
-        Dim objBook As Excel.Workbook = objApp.Workbooks.Add
-        Dim objSheet As Excel.Worksheet = objBook.Worksheets(1)
-        objSheet.Range("A1").Value = Nodes.Rows.Count - 2
-        objSheet.Range("A2").Value = "Nodes"
-        objSheet.Range("B2").Value = "Connections"
-        objSheet.Range("C2").Value = "Types"
-        objSheet.Range("D2").Value = "Positions"
-        objSheet.Range("E2").Value = "Forces"
-        For i As Integer = 0 To Nodes.Rows.Count - 1
-            objSheet.Range("A" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(0).Value
-            objSheet.Range("B" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(1).Value
-            objSheet.Range("C" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(2).Value
-            objSheet.Range("D" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(3).Value
-            objSheet.Range("E" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(4).Value
-        Next
-        objBook.SaveCopyAs("C:\Users\finne\OneDrive\Documents\Test3.xlsx")
+        Const WM_QUIT = &H12
+        SaveFile.Filter = "Excel files (*.xlsx)|*.xlsx"
+        If (SaveFile.ShowDialog() = DialogResult.OK) Then
+            Dim objApp As Excel.Application = New Excel.Application
+            Dim objBook As Excel.Workbook = objApp.Workbooks.Add
+            Dim objSheet As Excel.Worksheet = objBook.Worksheets(1)
+            objSheet.Range("A1").Value = Nodes.Rows.Count - 2
+            objSheet.Range("A2").Value = "Nodes"
+            objSheet.Range("B2").Value = "Connections"
+            objSheet.Range("C2").Value = "Types"
+            objSheet.Range("D2").Value = "Positions"
+            objSheet.Range("E2").Value = "Forces"
+            For i As Integer = 0 To Nodes.Rows.Count - 1
+                objSheet.Range("A" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(0).Value
+                objSheet.Range("B" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(1).Value
+                objSheet.Range("C" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(2).Value
+                objSheet.Range("D" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(3).Value
+                objSheet.Range("E" & (i + 3)).Value = Nodes.Rows(i).Cells.Item(4).Value
+            Next
+            objBook.SaveCopyAs(SaveFile.FileName)
+            objBook.Close()
+            objApp.Quit()
+            PostMessage(objApp.Hwnd, WM_QUIT, 0, 0)
+            MessageBox.Show("File successfully saved!")
+        End If
     End Sub
 
     Private Sub LoadExcel_Click(sender As Object, e As EventArgs) Handles LoadExcel.Click
-        Dim objApp As Excel.Application = New Excel.Application
-        Dim objBook As Excel.Workbook = objApp.Workbooks.Open("C:\Users\finne\OneDrive\Documents\Test3.xlsx")
-        Dim objSheet As Excel.Worksheet = objBook.Worksheets(1)
-        While (Nodes.Rows.Count > 1)
-            Nodes.Rows.RemoveAt(Nodes.Rows.Count - 1)
-        End While
-        For i As Integer = 0 To objSheet.Range("A1").Value
-            Nodes.Rows.Add(objSheet.Range("A" & (i + 3)).Value, objSheet.Range("B" & (i + 3)).Value, objSheet.Range("C" & (i + 3)).Value, objSheet.Range("D" & (i + 3)).Value, objSheet.Range("E" & (i + 3)).Value)
-        Next
-        objBook.Close()
+        Const WM_QUIT = &H12
+        OpenFile.Filter = "Excel files (*.xlsx)|*.xlsx"
+        If (OpenFile.ShowDialog() = DialogResult.OK) Then
+            Dim objApp As Excel.Application = New Excel.Application
+            Dim objBook As Excel.Workbook = objApp.Workbooks.Open(OpenFile.FileName)
+            Dim objSheet As Excel.Worksheet = objBook.Worksheets(1)
+            While (Nodes.Rows.Count > 1)
+                Nodes.Rows.RemoveAt(Nodes.Rows.Count - 1)
+            End While
+            For i As Integer = 0 To objSheet.Range("A1").Value
+                Nodes.Rows.Add(objSheet.Range("A" & (i + 3)).Value, objSheet.Range("B" & (i + 3)).Value, objSheet.Range("C" & (i + 3)).Value, objSheet.Range("D" & (i + 3)).Value, objSheet.Range("E" & (i + 3)).Value)
+            Next
+            objBook.Close()
+            objApp.Quit()
+            PostMessage(objApp.Hwnd, WM_QUIT, 0, 0)
+        End If
+    End Sub
+    Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Int32, ByVal wMsg As Int32, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
+    Private Sub Help_Click(sender As Object, e As EventArgs) Handles Help.Click
+        System.Windows.Forms.Help.ShowHelp(ParentForm, "TrussHelp.chm")
     End Sub
 End Class
