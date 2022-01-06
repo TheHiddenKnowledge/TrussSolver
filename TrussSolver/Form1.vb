@@ -442,7 +442,9 @@ Public Class Form1
             PostMessage(objApp.Hwnd, WM_QUIT, 0, 0)
         End If
     End Sub
+    'System function that kills the process for the opened excel file
     Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Int32, ByVal wMsg As Int32, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
+    'Subroutine that opens the help menu
     Private Sub Help_Click(sender As Object, e As EventArgs) Handles Help.Click
         System.Windows.Forms.Help.ShowHelp(ParentForm, "TrussHelp.chm")
     End Sub
