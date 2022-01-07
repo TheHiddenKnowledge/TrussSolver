@@ -37,23 +37,25 @@ Partial Class Form1
         Me.Forces = New System.Windows.Forms.ListBox()
         Me.Answer = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.LoadExcel = New System.Windows.Forms.Button()
         Me.SaveExcel = New System.Windows.Forms.Button()
         Me.SaveFile = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFile = New System.Windows.Forms.OpenFileDialog()
         Me.Help = New System.Windows.Forms.Button()
+        Me.Figure = New System.Windows.Forms.PictureBox()
+        Me.Minimize = New System.Windows.Forms.Button()
+        Me.ExitButton = New System.Windows.Forms.Button()
         CType(Me.Nodes, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Figure, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Nodes
         '
         Me.Nodes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.Nodes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders
-        Me.Nodes.BackgroundColor = System.Drawing.Color.DarkSlateBlue
-        Me.Nodes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Nodes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken
-        Me.Nodes.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken
+        Me.Nodes.BackgroundColor = System.Drawing.Color.MistyRose
+        Me.Nodes.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.Nodes.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.MistyRose
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
@@ -75,6 +77,7 @@ Partial Class Form1
         Me.Nodes.Location = New System.Drawing.Point(25, 53)
         Me.Nodes.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Nodes.Name = "Nodes"
+        Me.Nodes.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.Color.MistyRose
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
@@ -125,87 +128,95 @@ Partial Class Form1
         '
         'Calculate
         '
-        Me.Calculate.BackColor = System.Drawing.Color.MistyRose
-        Me.Calculate.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Calculate.BackColor = System.Drawing.Color.DarkSalmon
+        Me.Calculate.FlatAppearance.BorderColor = System.Drawing.Color.DarkSalmon
+        Me.Calculate.FlatAppearance.BorderSize = 0
+        Me.Calculate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MistyRose
+        Me.Calculate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose
+        Me.Calculate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Calculate.Font = New System.Drawing.Font("Tahoma", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Calculate.Location = New System.Drawing.Point(479, 399)
         Me.Calculate.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Calculate.Name = "Calculate"
         Me.Calculate.Size = New System.Drawing.Size(169, 61)
         Me.Calculate.TabIndex = 5
-        Me.Calculate.Text = "Calculate Forces"
+        Me.Calculate.Text = "Calculate"
         Me.Calculate.UseVisualStyleBackColor = False
         '
         'Forces
         '
         Me.Forces.BackColor = System.Drawing.Color.MistyRose
+        Me.Forces.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.Forces.Cursor = System.Windows.Forms.Cursors.Default
+        Me.Forces.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Forces.FormattingEnabled = True
-        Me.Forces.ItemHeight = 18
+        Me.Forces.ItemHeight = 24
         Me.Forces.Location = New System.Drawing.Point(680, 86)
         Me.Forces.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Forces.Name = "Forces"
-        Me.Forces.Size = New System.Drawing.Size(114, 274)
+        Me.Forces.Size = New System.Drawing.Size(114, 264)
         Me.Forces.TabIndex = 6
         '
         'Answer
         '
         Me.Answer.BackColor = System.Drawing.Color.MistyRose
+        Me.Answer.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.Answer.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Answer.FormattingEnabled = True
-        Me.Answer.ItemHeight = 18
+        Me.Answer.ItemHeight = 24
         Me.Answer.Location = New System.Drawing.Point(802, 86)
         Me.Answer.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Answer.Name = "Answer"
-        Me.Answer.Size = New System.Drawing.Size(114, 274)
+        Me.Answer.Size = New System.Drawing.Size(114, 264)
         Me.Answer.TabIndex = 7
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Black
-        Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(683, 53)
+        Me.Label1.BackColor = System.Drawing.Color.DarkSalmon
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Label1.ForeColor = System.Drawing.Color.Black
+        Me.Label1.Location = New System.Drawing.Point(719, 53)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(107, 20)
+        Me.Label1.Size = New System.Drawing.Size(197, 34)
         Me.Label1.TabIndex = 8
         Me.Label1.Text = "Force Names"
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Black
-        Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(803, 53)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(106, 20)
-        Me.Label2.TabIndex = 9
-        Me.Label2.Text = "Force Values"
-        '
         'LoadExcel
         '
-        Me.LoadExcel.BackColor = System.Drawing.Color.MistyRose
-        Me.LoadExcel.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.LoadExcel.BackColor = System.Drawing.Color.DarkSalmon
+        Me.LoadExcel.FlatAppearance.BorderColor = System.Drawing.Color.DarkSalmon
+        Me.LoadExcel.FlatAppearance.BorderSize = 0
+        Me.LoadExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MistyRose
+        Me.LoadExcel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose
+        Me.LoadExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.LoadExcel.Font = New System.Drawing.Font("Tahoma", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.LoadExcel.Location = New System.Drawing.Point(252, 400)
         Me.LoadExcel.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LoadExcel.Name = "LoadExcel"
         Me.LoadExcel.Size = New System.Drawing.Size(169, 61)
         Me.LoadExcel.TabIndex = 10
-        Me.LoadExcel.Text = "Load from Excel"
+        Me.LoadExcel.Text = "Load"
         Me.LoadExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.LoadExcel.UseVisualStyleBackColor = False
         '
         'SaveExcel
         '
-        Me.SaveExcel.BackColor = System.Drawing.Color.MistyRose
-        Me.SaveExcel.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.SaveExcel.BackColor = System.Drawing.Color.DarkSalmon
+        Me.SaveExcel.FlatAppearance.BorderColor = System.Drawing.Color.DarkSalmon
+        Me.SaveExcel.FlatAppearance.BorderSize = 0
+        Me.SaveExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MistyRose
+        Me.SaveExcel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose
+        Me.SaveExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.SaveExcel.Font = New System.Drawing.Font("Tahoma", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.SaveExcel.ForeColor = System.Drawing.SystemColors.ControlText
         Me.SaveExcel.Location = New System.Drawing.Point(25, 400)
         Me.SaveExcel.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.SaveExcel.Name = "SaveExcel"
         Me.SaveExcel.Size = New System.Drawing.Size(169, 61)
         Me.SaveExcel.TabIndex = 11
-        Me.SaveExcel.Text = "Save to Excel"
+        Me.SaveExcel.Text = "Save"
         Me.SaveExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.SaveExcel.UseVisualStyleBackColor = False
         '
@@ -215,9 +226,14 @@ Partial Class Form1
         '
         'Help
         '
-        Me.Help.BackColor = System.Drawing.Color.MistyRose
-        Me.Help.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.Help.Location = New System.Drawing.Point(713, 399)
+        Me.Help.BackColor = System.Drawing.Color.DarkSalmon
+        Me.Help.FlatAppearance.BorderColor = System.Drawing.Color.DarkSalmon
+        Me.Help.FlatAppearance.BorderSize = 0
+        Me.Help.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MistyRose
+        Me.Help.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose
+        Me.Help.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Help.Font = New System.Drawing.Font("Tahoma", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Help.Location = New System.Drawing.Point(712, 399)
         Me.Help.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Help.Name = "Help"
         Me.Help.Size = New System.Drawing.Size(169, 61)
@@ -225,30 +241,84 @@ Partial Class Form1
         Me.Help.Text = "Help"
         Me.Help.UseVisualStyleBackColor = False
         '
+        'Figure
+        '
+        Me.Figure.BackColor = System.Drawing.Color.MistyRose
+        Me.Figure.Location = New System.Drawing.Point(941, 53)
+        Me.Figure.Name = "Figure"
+        Me.Figure.Size = New System.Drawing.Size(482, 407)
+        Me.Figure.TabIndex = 13
+        Me.Figure.TabStop = False
+        '
+        'Minimize
+        '
+        Me.Minimize.BackColor = System.Drawing.Color.DarkSalmon
+        Me.Minimize.FlatAppearance.BorderColor = System.Drawing.Color.DarkSalmon
+        Me.Minimize.FlatAppearance.BorderSize = 0
+        Me.Minimize.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MistyRose
+        Me.Minimize.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose
+        Me.Minimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Minimize.Font = New System.Drawing.Font("Tahoma", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Minimize.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Minimize.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Minimize.Location = New System.Drawing.Point(1323, -1)
+        Me.Minimize.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.Minimize.Name = "Minimize"
+        Me.Minimize.Size = New System.Drawing.Size(53, 48)
+        Me.Minimize.TabIndex = 14
+        Me.Minimize.Text = "-"
+        Me.Minimize.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.Minimize.UseVisualStyleBackColor = False
+        '
+        'ExitButton
+        '
+        Me.ExitButton.BackColor = System.Drawing.Color.DarkSalmon
+        Me.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkSalmon
+        Me.ExitButton.FlatAppearance.BorderSize = 0
+        Me.ExitButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MistyRose
+        Me.ExitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose
+        Me.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ExitButton.Font = New System.Drawing.Font("Tahoma", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.ExitButton.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ExitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.ExitButton.Location = New System.Drawing.Point(1384, -1)
+        Me.ExitButton.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.ExitButton.Name = "ExitButton"
+        Me.ExitButton.Size = New System.Drawing.Size(53, 48)
+        Me.ExitButton.TabIndex = 15
+        Me.ExitButton.Text = "x"
+        Me.ExitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.ExitButton.UseVisualStyleBackColor = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkSalmon
         Me.ClientSize = New System.Drawing.Size(1435, 494)
+        Me.Controls.Add(Me.ExitButton)
+        Me.Controls.Add(Me.Minimize)
+        Me.Controls.Add(Me.Figure)
         Me.Controls.Add(Me.Help)
         Me.Controls.Add(Me.SaveExcel)
         Me.Controls.Add(Me.LoadExcel)
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Answer)
         Me.Controls.Add(Me.Forces)
         Me.Controls.Add(Me.Calculate)
         Me.Controls.Add(Me.Nodes)
         Me.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(1628, 545)
         Me.Name = "Form1"
+        Me.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Text = "Ultimate Truss Solver"
+        Me.TransparencyKey = System.Drawing.Color.Gray
         CType(Me.Nodes, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Figure, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -263,10 +333,12 @@ Partial Class Form1
     Friend WithEvents Forces As ListBox
     Friend WithEvents Answer As ListBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
     Friend WithEvents LoadExcel As Button
     Friend WithEvents SaveExcel As Button
     Friend WithEvents SaveFile As SaveFileDialog
     Friend WithEvents OpenFile As OpenFileDialog
     Friend WithEvents Help As Button
+    Friend WithEvents Figure As PictureBox
+    Friend WithEvents Minimize As Button
+    Friend WithEvents ExitButton As Button
 End Class

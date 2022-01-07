@@ -1,6 +1,8 @@
 ﻿Imports MathNet.Numerics.LinearAlgebra
 Imports MathNet.Numerics.Statistics
 Imports Microsoft.Office.Interop
+Imports System.Windows.Media
+Imports System.Windows.Media.Animation
 
 Public Class Form1
     'Determines whether the screen needs to be repainted
@@ -143,13 +145,13 @@ Public Class Form1
     Private Function Display_Truss()
         'The truss is plotted with respect to the pixels of the form itself 
         'This scaling factor was calculated experimentally
-        Dim scale As Double = Width / (10 * (maxcoor + 1))
+        Dim scale As Double = Figure.Width / (5 * (maxcoor + 1))
         'This is the horizontal start offset relative to the width of the form
-        Dim widthfactor As Double = Width - (Width - (Answer.Left + Answer.Width)) / 2
+        Dim widthfactor As Double = Figure.Width / 2
         'The surface handle used to create the graphics objects
-        Dim surface As Graphics = CreateGraphics()
+        Dim surface As Graphics = Figure.CreateGraphics()
         'When this function is called the surface is first cleared
-        surface.Clear(Color.DarkSalmon)
+        surface.Clear(Color.MistyRose)
         'Array to keep track of the members that have already been plotted
         Dim plotted As New ArrayList()
         'Unique string that identifies each member
@@ -211,15 +213,15 @@ Public Class Form1
                             p1(k) = Points(k, node1 - 1)
                             p2(k) = Points(k, node2 - 1)
                             currentnode.X = scale * p1(0) + widthfactor
-                            currentnode.Y = -scale * p1(1) + Height / 2
+                            currentnode.Y = -scale * p1(1) + Figure.Height / 2
                             nextnode.X = scale * p2(0) + widthfactor
-                            nextnode.Y = -scale * p2(1) + Height / 2
+                            nextnode.Y = -scale * p2(1) + Figure.Height / 2
                         Next
                         'Two circles are drawn for each joint of the member
                         surface.DrawEllipse(Pens.Blue, currentnode.X - 5, currentnode.Y - 5, 10, 10)
                         surface.DrawEllipse(Pens.Blue, nextnode.X - 5, nextnode.Y - 5, 10, 10)
                         'A label is placed at the middle of the member
-                        surface.DrawString(lbl, New Font("Arial", 12), New SolidBrush(Color.Black), (nextnode.X - currentnode.X) / 2 + currentnode.X, (nextnode.Y - currentnode.Y) / 2 + currentnode.Y)
+                        surface.DrawString(lbl, New Font("Tahoma", 12), New SolidBrush(Color.Black), (nextnode.X - currentnode.X) / 2 + currentnode.X, (nextnode.Y - currentnode.Y) / 2 + currentnode.Y)
                         'The line representing the member is drawn
                         surface.DrawLine(pen, currentnode, nextnode)
                     End If
@@ -238,6 +240,7 @@ Public Class Form1
         ReDim Points(1, Nodes.Rows.Count - 2)
         ReDim NCList(Nodes.Rows.Count - 3, Nodes.Rows.Count - 2)
         ReDim AppliedForces((Nodes.Rows.Count - 1) * 2 - 1, 0)
+        IntForces = New Double(,) {}
         'Array used to determine the maximum coordinate
         Dim maxcoorlist((Nodes.Rows.Count - 1) * 2 - 1) As Double
         'The following variables are used to determine whether the truss is indeterminate 
@@ -381,7 +384,7 @@ Public Class Form1
     End Sub
 
     'Subroutine for painting the form when it is called to be repainted
-    Private Sub Form1_Paint(sender As Object, e As EventArgs) Handles MyBase.Paint
+    Private Sub Figure_Paint(sender As Object, e As PaintEventArgs) Handles Figure.Paint
         If doPaint Then
             Display_Truss()
         End If
@@ -395,6 +398,7 @@ Public Class Form1
             MessageBox.Show("Unexpected error occurred: " & vbCrLf & ex.Message)
         End Try
     End Sub
+
     'Subroutine that saves the inputted data to an excel file
     Private Sub SaveExcel_Click(sender As Object, e As EventArgs) Handles SaveExcel.Click
         Const WM_QUIT = &H12
@@ -423,8 +427,10 @@ Public Class Form1
             MessageBox.Show("File successfully saved!")
         End If
     End Sub
+
     'Subroutine that loads input data from an excel file
     Private Sub LoadExcel_Click(sender As Object, e As EventArgs) Handles LoadExcel.Click
+        Nodes.AllowUserToAddRows = False
         Const WM_QUIT = &H12
         OpenFile.Filter = "Excel files (*.xlsx)|*.xlsx"
         If (OpenFile.ShowDialog() = DialogResult.OK) Then
@@ -441,11 +447,59 @@ Public Class Form1
             objApp.Quit()
             PostMessage(objApp.Hwnd, WM_QUIT, 0, 0)
         End If
+        Nodes.AllowUserToAddRows = True
     End Sub
+
     'System function that kills the process for the opened excel file
     Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Int32, ByVal wMsg As Int32, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
+
     'Subroutine that opens the help menu
     Private Sub Help_Click(sender As Object, e As EventArgs) Handles Help.Click
         System.Windows.Forms.Help.ShowHelp(ParentForm, "TrussHelp.chm")
+    End Sub
+
+    Private Sub roundCorners(obj As Object, radius As Double)
+        Dim path As New Drawing2D.GraphicsPath
+        'e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+        path.StartFigure()
+        path.AddArc(New Rectangle(0, 0, radius, radius), 180, 90)
+        path.AddArc(New Rectangle(obj.Width - radius, 0, radius, radius), 270, 90)
+        path.AddArc(New Rectangle(obj.Width - radius, obj.Height - radius, radius, radius), 0, 90)
+        path.AddArc(New Rectangle(0, obj.Height - radius, radius, radius), 90, 90)
+        path.CloseFigure()
+        obj.Region = New Region(path)
+    End Sub
+    Dim drag As Boolean
+    Dim mousex As Integer
+    Dim mousey As Integer
+    Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+        drag = True 'Sets the variable drag to true.
+        mousex = Windows.Forms.Cursor.Position.X - Me.Left 'Sets variable mousex
+        mousey = Windows.Forms.Cursor.Position.Y - Me.Top 'Sets variable mousey
+    End Sub
+
+    Private Sub Form1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
+        'If drag is set to true then move the form accordingly.
+        If drag Then
+            Me.Top = Windows.Forms.Cursor.Position.Y - mousey
+            Me.Left = Windows.Forms.Cursor.Position.X - mousex
+        End If
+    End Sub
+
+    Private Sub Form1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
+        drag = False 'Sets drag to false, so the form does not move according to the code in MouseMove
+    End Sub
+
+    Private Sub Minimize_Click(sender As Object, e As EventArgs) Handles Minimize.Click
+        Me.FormBorderStyle = FormBorderStyle.Sizable
+        Me.WindowState = FormWindowState.Minimized
+    End Sub
+
+    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Form1_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        Me.FormBorderStyle = FormBorderStyle.None
     End Sub
 End Class
