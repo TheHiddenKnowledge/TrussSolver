@@ -1,8 +1,6 @@
 ﻿Imports MathNet.Numerics.LinearAlgebra
 Imports MathNet.Numerics.Statistics
 Imports Microsoft.Office.Interop
-Imports System.Windows.Media
-Imports System.Windows.Media.Animation
 
 Public Class Form1
     'Determines whether the screen needs to be repainted
@@ -383,7 +381,7 @@ Public Class Form1
         doPaint = True
     End Sub
 
-    'Subroutine for painting the form when it is called to be repainted
+    'Subroutine for painting the truss figure when it is called to be repainted
     Private Sub Figure_Paint(sender As Object, e As PaintEventArgs) Handles Figure.Paint
         If doPaint Then
             Display_Truss()
@@ -458,36 +456,25 @@ Public Class Form1
         System.Windows.Forms.Help.ShowHelp(ParentForm, "TrussHelp.chm")
     End Sub
 
-    Private Sub roundCorners(obj As Object, radius As Double)
-        Dim path As New Drawing2D.GraphicsPath
-        'e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-        path.StartFigure()
-        path.AddArc(New Rectangle(0, 0, radius, radius), 180, 90)
-        path.AddArc(New Rectangle(obj.Width - radius, 0, radius, radius), 270, 90)
-        path.AddArc(New Rectangle(obj.Width - radius, obj.Height - radius, radius, radius), 0, 90)
-        path.AddArc(New Rectangle(0, obj.Height - radius, radius, radius), 90, 90)
-        path.CloseFigure()
-        obj.Region = New Region(path)
-    End Sub
+    'Subroutines for dragging, minimizing, restoring, and exiting a borderless windows 
     Dim drag As Boolean
     Dim mousex As Integer
     Dim mousey As Integer
-    Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+    Private Sub Panel1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown
         drag = True 'Sets the variable drag to true.
         mousex = Windows.Forms.Cursor.Position.X - Me.Left 'Sets variable mousex
         mousey = Windows.Forms.Cursor.Position.Y - Me.Top 'Sets variable mousey
     End Sub
 
-    Private Sub Form1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
-        'If drag is set to true then move the form accordingly.
+    Private Sub Panel1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseMove
         If drag Then
             Me.Top = Windows.Forms.Cursor.Position.Y - mousey
             Me.Left = Windows.Forms.Cursor.Position.X - mousex
         End If
     End Sub
 
-    Private Sub Form1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
-        drag = False 'Sets drag to false, so the form does not move according to the code in MouseMove
+    Private Sub Panel1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseUp
+        drag = False
     End Sub
 
     Private Sub Minimize_Click(sender As Object, e As EventArgs) Handles Minimize.Click
@@ -500,6 +487,12 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        Timer1.Interval = 10
+        Timer1.Start()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Me.FormBorderStyle = FormBorderStyle.None
+        Timer1.Stop()
     End Sub
 End Class
